@@ -466,6 +466,7 @@ namespace NorenRestApiWrapper
         public string ret;
         public string trgprc;
         public string uid;
+        public string actid;
         public string bpprc;
         public string blprc;
         public string trailprc;
@@ -484,6 +485,7 @@ namespace NorenRestApiWrapper
     {
         public string norenordno;
         public string uid;
+        public string actid;
     }
     public class CancelOrderResponse : NorenResponseMsg
     {
