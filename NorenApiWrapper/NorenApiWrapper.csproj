@@ -2,13 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.7.0</Version>
+    <Version>1.8.0</Version>
     <Company>Kambala Solutions Pvt Ltd</Company>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Description>21-03-2024
-- websocket send methods are bool
-- hearbeat added
-- reconnect websocket</Description>
+    <Description>23-05-2024
+- getclients, limits, holdings and dealer positions added</Description>
     <PackageId>NorenDApiWrapper</PackageId>
     <Authors>Kumar Anand</Authors>
   </PropertyGroup>

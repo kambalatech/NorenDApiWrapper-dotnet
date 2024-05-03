@@ -3,6 +3,7 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace NorenRestApiWrapper
 {
@@ -255,6 +256,18 @@ namespace NorenRestApiWrapper
             return true;
         }
         #endregion
+        public bool GetClients(OnResponse response)
+        {
+            if (loginResp == null)
+                return false;
+
+            UserDetails userDetails = new UserDetails();
+            userDetails.uid = loginReq.uid;
+            string uri = "GetClients";
+
+            rClient.makeRequest(new NorenApiResponse<accountItemResponse>(response), uri, userDetails.toJson(), getJKey);
+            return true;
+        }
         public bool SendGetSecurityInfo(OnResponse response, string exch, string token)
         {
             if (loginResp == null)
@@ -373,7 +386,19 @@ namespace NorenRestApiWrapper
             rClient.makeRequest(new NorenApiResponseList<OrderHistoryResponse, SingleOrdHistItem>(response), uri, orderhistory.toJson(), getJKey);
             return true;
         }
-        public bool SendGetPositionBook(OnResponse response)
+        public bool SendGetDealerPositionBook(OnResponse response)
+        {
+            if (loginResp == null)
+                return false;
+
+            string uri = "DealerPositionBook";
+            PositionBook positionBook = new PositionBook();
+            positionBook.uid = loginReq.uid;
+
+            rClient.makeRequest(new NorenApiResponseList<PositionBookResponse, PositionBookItem>(response), uri, positionBook.toJson(), getJKey);
+            return true;
+        }
+        private bool SendGetPositionBook(OnResponse response)
         {
             if (loginResp == null)
                 return false;
@@ -385,7 +410,7 @@ namespace NorenRestApiWrapper
             rClient.makeRequest(new NorenApiResponseList<PositionBookResponse, PositionBookItem>(response), uri, positionBook.toJson(), getJKey);
             return true;
         }
-        private bool SendGetHoldings(OnResponse response, string account, string product)
+        public bool SendGetHoldings(OnResponse response, string account, string product)
         {
             if (loginResp == null)
                 return false;
@@ -399,7 +424,7 @@ namespace NorenRestApiWrapper
             rClient.makeRequest(new NorenApiResponseList<HoldingsResponse, HoldingsItem>(response), uri, holdings.toJson(), getJKey);
             return true;
         }
-        private bool SendGetLimits(OnResponse response, string account, string product = "", string segment = "", string exchange = "")
+        public bool SendGetLimits(OnResponse response, string account, string product = "", string segment = "", string exchange = "")
         {
             if (loginResp == null)
                 return false;
@@ -532,6 +557,7 @@ namespace NorenRestApiWrapper
 
         #endregion
 
+        #region websocket
         public bool ConnectWatcher(string url, OnFeed marketdataHandler, OnOrderFeed orderHandler)
         {
             wsclient = new NorenWebSocket();
@@ -702,7 +728,7 @@ namespace NorenRestApiWrapper
             Console.WriteLine($"Sub Order: {orderSubscribe.toJson()}");
             return ret;
         }
-        
-        
+
+        #endregion
     }
 }

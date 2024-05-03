@@ -406,6 +406,18 @@ namespace NorenRestApiWrapper
         public string request_time;
     }
 
+    public class accountItem
+    {
+        public string exch;
+        public string part_id;
+
+    }
+
+    public class accountItemResponse : StandardResponse
+    {
+        public List<accountItem> values;
+        
+    }
     public class AddMultiScripsToMW : NorenMessage
     {
         public string uid;
